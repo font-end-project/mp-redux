@@ -1,0 +1,26 @@
+{
+  "name": "mp-redux",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/font-end-project/mp-redux.git"
+  },
+  "author": "maigy95",
+  "keywords": [
+    "miniprogram",
+    "redux"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "webpack": "^4.42.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.11"
+  }
+}
