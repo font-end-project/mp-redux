@@ -1,7 +1,7 @@
 exports.createStore = createStore;
 exports.subscribe = subscribe;
 exports.unsubscribe = unsubscribe;
-exports.dispath = dispath;
+exports.dispatch = dispatch;
 exports.getState = getState;
 exports.clearState = clearState;
 
@@ -88,7 +88,7 @@ function unsubscribe(id) {
   idx !== -1 && listeners.splice(idx, 1);
 }
 
-function dispath(_action) {
+function dispatch(_action) {
   action = _action;
   preState = state;
   state = updateStore(reducers, preState);
