@@ -1,4 +1,4 @@
-const redux = Behavior({
+export const redux = Behavior({
   lifetimes: {
     attached() {
       subscribe(this.__wxExparserNodeId__, this.updateData, this);
@@ -48,13 +48,13 @@ let listeners = [];
 let reducers, sagas;
 let action = {};
 
-function createStore(reducer, saga) {
+export function createStore(reducer, saga) {
   reducers = reducer;
   sagas = saga || undefined;
   state = updateStore(reducers, preState);
 }
 
-function getState() {
+export function getState() {
   return JSON.parse(JSON.stringify(state));
 }
 
@@ -81,7 +81,7 @@ function unsubscribe(id) {
   idx !== -1 && listeners.splice(idx, 1);
 }
 
-function dispatch(_action) {
+export function dispatch(_action) {
   action = _action;
   preState = state;
   state = updateStore(reducers, preState);
@@ -130,7 +130,7 @@ function updateStore(reducer, state) {
   return res;
 }
 
-function clearState() {
+export function clearState() {
   preState = state;
   action = {};
   state = updateStore(reducers);
