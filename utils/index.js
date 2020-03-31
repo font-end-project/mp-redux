@@ -1,11 +1,4 @@
-exports.createStore = createStore;
-exports.subscribe = subscribe;
-exports.unsubscribe = unsubscribe;
-exports.dispatch = dispatch;
-exports.getState = getState;
-exports.clearState = clearState;
-
-exports.redux = Behavior({
+const redux = Behavior({
   lifetimes: {
     attached() {
       subscribe(this.__wxExparserNodeId__, this.updateData, this);
@@ -143,3 +136,11 @@ function clearState() {
   state = updateStore(reducers);
   notify();
 }
+
+export default {
+  redux,
+  createStore,
+  dispatch,
+  clearState,
+  getState
+};

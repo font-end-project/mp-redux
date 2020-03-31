@@ -3,10 +3,5 @@ module.exports = {
   output: {
     filename: "./index.js"
   },
-  mode: "production",
-
-  /* webpack-dev-server配置 */
-  devServer: {
-    publicPath: "/dist"
-  }
+  mode: "production"
 };
