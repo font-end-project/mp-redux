@@ -4,7 +4,7 @@ let reducers, sagas;
 let action = {};
 let logger = false;
 
-function createStore2(reducer, saga, needLogger) {
+function createStore(reducer, saga, needLogger) {
   needLogger && (logger = true);
   reducers = reducer;
   sagas = saga || undefined;
@@ -106,7 +106,7 @@ function clearState() {
 }
 
 export {
-  createStore2,
+  createStore,
   getState,
   getPreState,
   dispatch,

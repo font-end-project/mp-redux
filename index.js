@@ -1,8 +1,8 @@
-import { createStore2, getState, dispatch, clearState } from "./redux";
+import { createStore, getState, dispatch, clearState } from "./redux";
 import { redux, stateSelector, createSelect } from "./selector";
 
-export {
-  createStore2,
+export default {
+  createStore,
   dispatch,
   getState,
   clearState,
