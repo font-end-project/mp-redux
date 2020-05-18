@@ -31,11 +31,7 @@ const redux = Behavior({
     _checkState(isAttached) {
       const result = this._selector(this.data);
 
-      if (!result) {
-        return;
-      }
-
-      this._updateData(result, isAttached);
+      result && this._updateData(result, isAttached);
     },
     _updateData(result, isAttached) {
       const { pageState, prePageState } = result;
@@ -67,7 +63,7 @@ function stateSelector(_createSelect, data) {
     );
   }
 
-  return _createSelect(data || {});
+  return _createSelect(data);
 }
 
 function createSelect(...args) {
@@ -76,32 +72,44 @@ function createSelect(...args) {
       return null;
     }
 
-    const devs = args.slice(0, -1);
-    const cb = args[args.length - 1];
+    const devFnList = args.slice(0, -1);
+    const renderFn = args[args.length - 1];
 
-    const devsList = devs.map((getDev) => getDev(getState(), data));
+    const devResList = devFnList.map((getDev) => getDev(getState(), data));
 
     if (!getPreState()) {
-      return { pageState: cb(...devsList) };
+      return { pageState: renderFn(...devResList) };
     }
 
-    const preDevsList = devs.map((getDev) => getDev(getPreState(), data));
+    const preDevResList = devFnList.map((getDev) =>
+      getDev(getPreState(), data)
+    );
 
-    let needUpdate = false;
-    const length = devsList.length;
-    for (let i = 0; i < length; i++) {
-      if (devsList[i] !== preDevsList[i]) {
-        needUpdate = true;
-        break;
-      }
-    }
+    const needUpdate = !isEqualForArray(devResList, preDevResList);
 
     if (needUpdate) {
-      return { pageState: cb(...devsList), prePageState: cb(...preDevsList) };
-    } else {
-      return null;
+      return {
+        pageState: renderFn(...devResList),
+        prePageState: renderFn(...preDevResList),
+      };
     }
+
+    return null;
   };
+}
+
+function isEqualForArray(listA, listB) {
+  let equal = true;
+  const length = listA.length;
+
+  for (let i = 0; i < length; i++) {
+    if (listA[i] !== listB[i]) {
+      equal = false;
+      break;
+    }
+  }
+
+  return equal;
 }
 
 export { redux, stateSelector, createSelect };
