@@ -1,4 +1,4 @@
-import { subscribe, unsubscribe, getState, getPreState } from "./redux";
+import { subscribe, unSubscribe, getState, getPreState } from "./redux";
 
 const redux = Behavior({
   lifetimes: {
@@ -7,7 +7,7 @@ const redux = Behavior({
       this._checkState.call(this, true);
     },
     detached() {
-      unsubscribe(this.__wxExparserNodeId__);
+      unSubscribe(this.__wxExparserNodeId__);
     },
   },
 
