@@ -1,3 +1,5 @@
+import { getType } from "./util";
+
 let wmpRedux = {
   preState: null,
   state: null,
@@ -14,19 +16,13 @@ function createStore(reducers, sagas = null, logger = false) {
   }
 
   if (reducers) {
-    if (typeof reducers !== "object") {
-      throw new Error("Reducer must be a Object");
-    }
-    if (reducers.constructor !== Object) {
+    if (getType(reducers) !== "Object") {
       throw new Error("Reducer must be a Object");
     }
   }
 
   if (sagas) {
-    if (typeof sagas !== "object") {
-      throw new Error("Saga must be a Object");
-    }
-    if (sagas.constructor !== Object) {
+    if (getType(sagas) !== "Object") {
       throw new Error("Saga must be a Object");
     }
   }
@@ -50,7 +46,7 @@ function getState() {
 }
 
 function setState(stateValueOf) {
-  if (typeof stateValueOf === "function") {
+  if (getType(stateValueOf) === "Function") {
     wmpRedux.state = stateValueOf();
     return;
   }
@@ -63,7 +59,7 @@ function getPreState() {
 }
 
 function setPreState(preStateValueOf) {
-  if (typeof preStateValueOf === "function") {
+  if (getType(preStateValueOf) === "Function") {
     wmpRedux.preState = preStateValueOf();
     return;
   }
@@ -86,7 +82,7 @@ function subscribe(id, listener, that) {
   bol && wmpRedux.listeners.push({ id, listener, that });
 }
 
-function unSubscribe(id) {
+function unsubscribe(id) {
   let idx = -1;
   for (let i in wmpRedux.listeners) {
     if (wmpRedux.listeners[i].id === id) {
@@ -103,13 +99,8 @@ function dispatch(action) {
     throw new Error("there must commit a action when use dispatch");
   }
 
-  if (action) {
-    if (typeof action !== "object") {
-      throw new Error("action must be a object");
-    }
-    if (action.constructor !== Object) {
-      throw new Error("action must be a object");
-    }
+  if (getType(action) !== "Object") {
+    throw new Error("action must be a object");
   }
 
   setAction(action);
@@ -154,7 +145,7 @@ function updateStore(reducer, state = undefined) {
   const res = {};
 
   for (let i in reducer) {
-    if (typeof reducer[i] === "function") {
+    if (getType(reducer[i]) === "Function") {
       res[i] = reducer[i](wmpRedux.action, (state && state[i]) || undefined);
     } else {
       res[i] = updateStore(reducer[i], (state && state[i]) || undefined);
@@ -178,5 +169,5 @@ export {
   dispatch,
   clearState,
   subscribe,
-  unSubscribe,
+  unsubscribe,
 };

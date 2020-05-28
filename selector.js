@@ -1,4 +1,5 @@
-import { subscribe, unSubscribe, getState, getPreState } from "./redux";
+import { subscribe, unsubscribe, getState, getPreState } from "./redux";
+import { getType, isEqualForArray } from "./util";
 
 const redux = Behavior({
   lifetimes: {
@@ -7,7 +8,7 @@ const redux = Behavior({
       this._checkState.call(this, true);
     },
     detached() {
-      unSubscribe(this.__wxExparserNodeId__);
+      unsubscribe(this.__wxExparserNodeId__);
     },
   },
 
@@ -52,12 +53,7 @@ const redux = Behavior({
 });
 
 function stateSelector(_createSelect, data) {
-  if (data && typeof data !== "object") {
-    throw new Error(
-      "the second arg of stateSelector should be object or undefined"
-    );
-  }
-  if (data && data.constructor !== Object) {
+  if (data && getType(data) !== "Object") {
     throw new Error(
       "the second arg of stateSelector should be object or undefined"
     );
@@ -96,20 +92,6 @@ function createSelect(...args) {
 
     return null;
   };
-}
-
-function isEqualForArray(listA, listB) {
-  let equal = true;
-  const length = listA.length;
-
-  for (let i = 0; i < length; i++) {
-    if (listA[i] !== listB[i]) {
-      equal = false;
-      break;
-    }
-  }
-
-  return equal;
 }
 
 export { redux, stateSelector, createSelect };
