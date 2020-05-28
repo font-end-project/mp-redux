@@ -32,7 +32,11 @@ const redux = Behavior({
     _checkState(isAttached) {
       const result = this._selector(this.data);
 
-      result && this._updateData(result, isAttached);
+      if (!result || (!isAttached && !result.needUpdate)) {
+        return;
+      }
+
+      this._updateData(result, isAttached);
     },
     _updateData(result, isAttached) {
       const { pageState, prePageState } = result;
@@ -74,7 +78,7 @@ function createSelect(...args) {
     const devResList = devFnList.map((getDev) => getDev(getState(), data));
 
     if (!getPreState()) {
-      return { pageState: renderFn(...devResList) };
+      return { needUpdate: false, pageState: renderFn(...devResList) };
     }
 
     const preDevResList = devFnList.map((getDev) =>
@@ -85,12 +89,13 @@ function createSelect(...args) {
 
     if (needUpdate) {
       return {
+        needUpdate,
         pageState: renderFn(...devResList),
         prePageState: renderFn(...preDevResList),
       };
     }
 
-    return null;
+    return { needUpdate, pageState: renderFn(...devResList) };
   };
 }
 
