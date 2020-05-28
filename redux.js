@@ -72,26 +72,31 @@ function setAction(action) {
 }
 
 function subscribe(id, listener, that) {
+  const { listeners } = wmpRedux;
+
   let bol = true;
-  for (let i in wmpRedux.listeners) {
-    if (wmpRedux.listeners[i].id === id) {
+  for (let i in listeners) {
+    if (listeners[i].id === id) {
       bol = false;
       break;
     }
   }
-  bol && wmpRedux.listeners.push({ id, listener, that });
+
+  bol && listeners.push({ id, listener, that });
 }
 
 function unsubscribe(id) {
+  const { listeners } = wmpRedux;
+
   let idx = -1;
-  for (let i in wmpRedux.listeners) {
-    if (wmpRedux.listeners[i].id === id) {
+  for (let i in listeners) {
+    if (listeners[i].id === id) {
       idx = +i;
       break;
     }
   }
 
-  idx !== -1 && wmpRedux.listeners.splice(idx, 1);
+  idx !== -1 && listeners.splice(idx, 1);
 }
 
 function dispatch(action) {

@@ -23,8 +23,8 @@ const redux = Behavior({
     }
     defFields.methods._selector = selector;
 
-    if (defFields.stateDidUpdate) {
-      defFields.methods._stateDidUpdate = defFields.stateDidUpdate;
+    if (defFields.stateUpdated) {
+      defFields.methods._stateUpdated = defFields.stateUpdated;
     }
   },
 
@@ -40,11 +40,11 @@ const redux = Behavior({
       pageState && this.setData(pageState);
 
       if (!isAttached) {
-        if (this._stateDidUpdate) {
+        if (this._stateUpdated) {
           if (prePageState) {
-            this._stateDidUpdate(prePageState);
+            this._stateUpdated(prePageState);
           } else {
-            this._stateDidUpdate({});
+            this._stateUpdated({});
           }
         }
       }
