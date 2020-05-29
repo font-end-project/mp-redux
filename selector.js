@@ -1,7 +1,7 @@
 import { subscribe, unsubscribe, getState, getPreState } from "./redux";
 import { getType, isEqualForArray } from "./util";
 
-const redux = Behavior({
+const connect = Behavior({
   lifetimes: {
     attached() {
       subscribe(this.__wxExparserNodeId__, this._checkState, this);
@@ -36,37 +36,33 @@ const redux = Behavior({
         return;
       }
 
-      this._updateData(result, isAttached);
+      this._updateData(result);
     },
-    _updateData(result, isAttached) {
+    _updateData(result) {
       const { pageState, prePageState } = result;
 
       pageState && this.setData(pageState);
 
-      if (!isAttached) {
-        if (this._stateUpdated) {
-          if (prePageState) {
-            this._stateUpdated(prePageState);
-          } else {
-            this._stateUpdated({});
-          }
+      if (this._stateUpdated) {
+        if (prePageState) {
+          this._stateUpdated(prePageState);
         }
       }
     },
   },
 });
 
-function stateSelector(_createSelect, data) {
+function stateSelector(_createSelector, data) {
   if (data && getType(data) !== "Object") {
     throw new Error(
       "the second arg of stateSelector should be object or undefined"
     );
   }
 
-  return _createSelect(data);
+  return _createSelector(data);
 }
 
-function createSelect(...args) {
+function createSelector(...args) {
   return (data) => {
     if (!args || (args && args.length <= 1)) {
       return null;
@@ -87,16 +83,12 @@ function createSelect(...args) {
 
     const needUpdate = !isEqualForArray(devResList, preDevResList);
 
-    if (needUpdate) {
-      return {
-        needUpdate,
-        pageState: renderFn(...devResList),
-        prePageState: renderFn(...preDevResList),
-      };
-    }
-
-    return { needUpdate, pageState: renderFn(...devResList) };
+    return {
+      needUpdate,
+      pageState: renderFn(...devResList),
+      prePageState: needUpdate ? renderFn(...preDevResList) : null,
+    };
   };
 }
 
-export { redux, stateSelector, createSelect };
+export { connect, stateSelector, createSelector };
