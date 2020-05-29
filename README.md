@@ -161,7 +161,7 @@ Component({
 
   methods: {
     handleLogin() {
-      dispatch(Login());
+      dispatch(login());
     },
 
     handlePrint() {
