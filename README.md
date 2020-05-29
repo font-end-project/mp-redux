@@ -10,8 +10,8 @@ yarn add wmp-redux
 ```
 // app.js
 import Redux from 'wmp-redux’;
-import Reducer from ‘../reducers/index.js’;
-import Effects from ‘../effects/index.js’;
+import Reducer from ‘../reducers/index’;
+import Effects from ‘../effects/index’;
 
 Redux.createStore(Reducer[, Effects, true(false)])     // 第三个参数代表是否使用类似redux-logger的功能
 ```
