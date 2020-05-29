@@ -6,11 +6,11 @@ let wmpRedux = {
   listeners: [],
   action: {},
   reducers: null,
-  sagas: null,
+  effects: null,
   logger: false,
 };
 
-function createStore(reducers, sagas = null, logger = false) {
+function createStore(reducers, effects = null, logger = false) {
   if (!reducers) {
     throw new Error("There must be a Reducer for wmp-redux");
   }
@@ -21,8 +21,8 @@ function createStore(reducers, sagas = null, logger = false) {
     }
   }
 
-  if (sagas) {
-    if (getType(sagas) !== "Object") {
+  if (effects) {
+    if (getType(effects) !== "Object") {
       throw new Error("Saga must be a Object");
     }
   }
@@ -30,7 +30,7 @@ function createStore(reducers, sagas = null, logger = false) {
   wmpRedux = {
     ...wmpRedux,
     reducers,
-    sagas,
+    effects,
     logger,
   };
 
@@ -113,7 +113,7 @@ function dispatch(action) {
   setState(updateStore(wmpRedux.reducers, getPreState()));
   showLogger();
   notify();
-  handleSagas();
+  handleEffects();
 }
 
 function showLogger() {
@@ -136,12 +136,12 @@ function notify() {
   wmpRedux.listeners.forEach((child) => child.listener.call(child.that));
 }
 
-function handleSagas() {
-  const { sagas, action } = wmpRedux;
+function handleEffects() {
+  const { effects, action } = wmpRedux;
 
-  if (sagas) {
-    if (sagas[action.type]) {
-      sagas[action.type].forEach((cb) => cb(getState(), action));
+  if (effects) {
+    if (effects[action.type]) {
+      effects[action.type].forEach((cb) => cb(getState(), action));
     }
   }
 }
