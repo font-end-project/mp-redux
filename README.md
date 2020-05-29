@@ -130,8 +130,8 @@ const { login } = actions;
 const selector = createSelector(
   (state) => state.user.account,
   (_, data) => data.num,
-  (Account, num) => {
-    const { isLogin } = obj;
+  (account, num) => {
+    const { isLogin } = account;
     const numAdd = num + 5;
 
     return {
