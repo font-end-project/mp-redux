@@ -165,7 +165,7 @@ Component({
     },
 
     handlePrint() {
-      console.log(this.data);   // { aa: ‘aa’, isLogin: false, numAdd: 10 }
+      console.log(this.data);   // { num: 5, isLogin: false, numAdd: 10 }
     },
   },
 });
