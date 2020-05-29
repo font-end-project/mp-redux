@@ -8,7 +8,7 @@ yarn add wmp-redux
 
 使用：
 ```
-<font color=#0099ff>// app.js</font>
+// app.js
 import Redux from 'wmp-redux’;
 import Reducer from ‘../reducers/index’;
 import Effects from ‘../effects/index’;
