@@ -23,7 +23,7 @@ function createStore(reducers, effects = null, logger = false) {
 
   if (effects) {
     if (getType(effects) !== "Object") {
-      throw new Error("Saga must be a Object");
+      throw new Error("Effects must be a Object");
     }
   }
 
