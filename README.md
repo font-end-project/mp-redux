@@ -66,7 +66,7 @@ const reducers = Object.assign({}, user);
 export default reducers;
 ```
 
-Effects 使用 async/await处理异步，更加简单，便捷
+Effects 使用 async/await处理异步，简单，便捷
 ```
 // effects/user.js
 import Redux from "wmp-redux";
