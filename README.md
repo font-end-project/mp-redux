@@ -62,7 +62,7 @@ export default {
 ```
 // reducers/index.js
 import account from “./user";
-const reducers = Object.assign({}, user);
+const reducers = { account };
 
 export default reducers;
 ```
