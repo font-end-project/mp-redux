@@ -125,9 +125,8 @@ export default initEffect(userEffect);
 页面、组件使用：
 ```
 import Redux from "wmp-redux";
-import { actions } from "app-libs”;
 const { connect, dispatch, stateSelector, createSelector } = Redux;
-const { login } = actions;
+const { login } = '../../actions/index';
 
 // 与 reselect 相似
 const selector = createSelector(
