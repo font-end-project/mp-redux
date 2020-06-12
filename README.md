@@ -62,7 +62,7 @@ export default {
 ```
 // reducers/index.js
 import account from “./user";
-const reducers = Object.assign({}, user);
+const reducers = { account };
 
 export default reducers;
 ```
@@ -91,6 +91,9 @@ const watchLogin = {
 
 export default [watchLogin];
 ```
+
+effect函数可以接收两个参数 (state, action)，state即当前的整个redux状态，action为当前dispatch的action，即 { type: 'LOGIN' }
+
 
 ```
 // effects/index.js
@@ -122,9 +125,8 @@ export default initEffect(userEffect);
 页面、组件使用：
 ```
 import Redux from "wmp-redux";
-import { actions } from "app-libs”;
 const { connect, dispatch, stateSelector, createSelector } = Redux;
-const { login } = actions;
+const { login } = '../../actions/index';
 
 // 与 reselect 相似
 const selector = createSelector(
