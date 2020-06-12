@@ -25,7 +25,7 @@ const accountInitialState = {
   isLogin: false
 };
 
-function accountReducer(action, state = accountInitialState) 
+function accountReducer(state = accountInitialState, action) 
   switch (action.type) {
     case "LOGIN": {
       return {
