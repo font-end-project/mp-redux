@@ -151,7 +151,7 @@ function updateStore(reducer, state = undefined) {
 
   for (let i in reducer) {
     if (getType(reducer[i]) === "Function") {
-      res[i] = reducer[i](wmpRedux.action, (state && state[i]) || undefined);
+      res[i] = reducer[i]((state && state[i]) || undefined, wmpRedux.action);
     } else {
       res[i] = updateStore(reducer[i], (state && state[i]) || undefined);
     }
