@@ -36,16 +36,18 @@ const connect = Behavior({
         return;
       }
 
-      this._updateData(result);
+      this._updateData(result, isAttached);
     },
-    _updateData(result) {
+    _updateData(result, isAttached) {
       const { pageState, prePageState } = result;
 
       pageState && this.setData(pageState);
 
-      if (this._stateUpdated) {
-        if (prePageState) {
-          this._stateUpdated(prePageState);
+      if (!isAttached) {
+        if (this._stateUpdated) {
+          if (prePageState) {
+            this._stateUpdated(prePageState);
+          }
         }
       }
     },
